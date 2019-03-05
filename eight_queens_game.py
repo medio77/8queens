@@ -10,12 +10,16 @@ def random_board(board_random):  # place a queen randomly in each  row
 
 def threat_count(board_threat):
     counter = 0
+    worst_queen=0
+    partial_threats=0
+    worst_queen_threats=0
     for i in range(len(board_threat)):
         for j in range(len(board_threat)):
             if board_threat[i][j] == 1:
                 for threat_i in range(len(board_threat)):
                     if board_threat[threat_i][j] == 1:
                         counter = counter + 1
+                        partial_threats=partial_threats+1
                         # print("for",(i,j),"-->",(threat_i))
                 dif = abs(i - j)
                 first_i = i - min(i, j)
@@ -23,6 +27,7 @@ def threat_count(board_threat):
                 while (first_i < 8) and (first_j < 8):
                     if board_threat[first_i][first_j] == 1:
                         counter = counter + 1
+                        partial_threats = partial_threats + 1
                         # print("for ", (i, j), " -->", (first_i, first_j))
                     first_i = first_i + 1
                     first_j = first_j + 1
@@ -32,6 +37,7 @@ def threat_count(board_threat):
 
                     if board_threat[first_i][first_j] == 1:
                         counter = counter + 1
+                        partial_threats = partial_threats + 1
                     first_i = first_i - 1
                     first_j = first_j + 1
 
@@ -41,10 +47,16 @@ def threat_count(board_threat):
 
                     if board_threat[first_i][first_j] == 1:
                         counter = counter + 1
+                        partial_threats = partial_threats + 1
                     first_i = first_i + 1
                     first_j = first_j - 1
 
-    return counter - 32
+                if partial_threats>worst_queen_threats:
+                    worst_queen=i
+                    worst_queen_threats=partial_threats
+                partial_threats=0
+
+    return (counter - 32,worst_queen)
 
 
 def moves_to_childs(board_move):
