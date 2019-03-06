@@ -96,16 +96,18 @@ if __name__ == '__main__':
     up_steps_mass = 0
     how_many_times = 50
     local_optimum_list = []
+    step_up_list=[]
     for i in range(how_many_times):
         local_optimum_counter, up_steps_counter = hill_climbing_heuristic(board)
         print(i, "th board was solved!")
         local_optimum_list.append(local_optimum_counter)
+        step_up_list.append(up_steps_counter)
         local_optimom_mass = local_optimom_mass + local_optimum_counter
         up_steps_mass = up_steps_mass + up_steps_counter
 
     print("average touched local optimums: ", local_optimom_mass / how_many_times)
-    plt.plot(local_optimum_list, color='c', alpha=0.6, label='heuristic')
-    plt.axhline(local_optimom_mass / how_many_times, color='c', linestyle='dashed')
+    plt.plot(step_up_list, color='c', alpha=0.6, label='heuristic')
+    plt.axhline(up_steps_mass / how_many_times, color='c', linestyle='dashed')
 
     board = [[0, 0, 0, 0, 0, 0, 0, 0],
              [0, 0, 0, 0, 0, 0, 0, 0],
@@ -118,17 +120,19 @@ if __name__ == '__main__':
     local_optimom_mass = 0
     up_steps_mass = 0
     how_many_times = 50
+    step_up_list=[]
     local_optimum_list = []
     for i in range(how_many_times):
         local_optimum_counter, up_steps_counter = hill_climbing_random(board)
         print(i, "th board was solved!")
         local_optimum_list.append(local_optimum_counter)
+        step_up_list.append(up_steps_counter)
         local_optimom_mass = local_optimom_mass + local_optimum_counter
         up_steps_mass = up_steps_mass + up_steps_counter
 
     print("average touched local optimums: ", local_optimom_mass / how_many_times)
-    plt.plot(local_optimum_list, color='r', alpha=0.6, label='random')
-    plt.axhline(local_optimom_mass / how_many_times, color='r', linestyle='dashed')
+    plt.plot(step_up_list, color='r', alpha=0.6, label='random')
+    plt.axhline(up_steps_mass / how_many_times, color='r', linestyle='dashed')
     plt.axis()
 
     plt.legend()
